@@ -15,7 +15,6 @@
     </form>
 
     <ul id="listOfitems"></ul>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js">
 
     </script>
@@ -35,7 +34,7 @@
                 phonenumber
             }
 
-            axios.post("https://crudcrud.com/api/7a5406712a714be9b9db29ab8cfaf26a/appointmentdata", obj)
+            axios.post("https://crudcrud.com/api/b145f7bd17b948c48637d90f711e13d6/appointmentdata", obj)
                 .then((response) => {
                     showUserOnScreen(response.data);
                     // console.log(response.data);
@@ -51,7 +50,7 @@
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            axios.get("https://crudcrud.com/api/7a5406712a714be9b9db29ab8cfaf26a/appointmentdata")
+            axios.get("https://crudcrud.com/api/b145f7bd17b948c48637d90f711e13d6/appointmentdata")
                 .then((response) => {
                     console.log(response.data);
                     for (var i = 0; i < response.data.length; i++) {
@@ -72,16 +71,16 @@
             // document.getElementById('phoneNumberInputTag').value = '';
 
             const parentElem = document.getElementById('listOfitems');
-            const childHTML = `<li id=${user._id}> ${user.name} - ${user.email} 
+            const childHTML = `<li id=${user._id}> ${user.name} - ${user.email} - ${user.phonenumber}
                                     <button onclick= deleteUser('${user._id}')> DeleteUser </button> 
-                                    <button onclick= editUserDetails('${user._id}' , '${user.name}' , '${user.phonenumber}')>EditUser</button>
+                                    <button onclick= editUserDetails('${user.name}','${user.email}','${user.phonenumber}','${user._id}') >EditUser</button>
                                 </li>`;
             parentElem.innerHTML = parentElem.innerHTML + childHTML;
         }
 
-        function deleteUser(userId){
+        function deleteUser(userId) {
 
-            axios.delete(`https://crudcrud.com/api/7a5406712a714be9b9db29ab8cfaf26a/appointmentdata/${userId}`)
+            axios.delete(`https://crudcrud.com/api/b145f7bd17b948c48637d90f711e13d6/appointmentdata/${userId}`)
                 .then((response) => {
                     removeUserFromScreen(userId)
                 })
@@ -97,6 +96,16 @@
                 parentElem.removeChild(parentNodeToBeDeleted);
             }
         }
+
+        function editUserDetails(name, email, phonenumber, userId){
+            document.getElementById('usernameInputTag').value = name;
+            document.getElementById('emailInputTag').value = email;
+            document.getElementById('phonenumberInputTag').value = phonenumber;
+
+            deleteUser(userId);
+
+        }
+
     </script>
 </body>
 
